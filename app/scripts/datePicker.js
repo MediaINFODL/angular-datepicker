@@ -260,11 +260,7 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       scope.$watch('callUpdate', function (value) {
         /*Checking if the given value is not undefined*/
         if(value){
-          scope.Obj = value;
-          /*Injecting the Method*/
-          scope.Obj.invoke = function(){
-            update();
-          };
+          update();
         }
       });
     }
