@@ -35,7 +35,8 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
     scope: {
       model: '=datePicker',
       after: '=?',
-      before: '=?'
+      before: '=?',
+      callUpdate: '='
     },
     link: function (scope, element, attrs, ngModel) {
 
@@ -254,6 +255,18 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         }
         return is;
       };
+
+      /*This method will be called whet the 'callUpdate' value is changes*/
+      scope.$watch('callUpdate', function (value) {
+        /*Checking if the given value is not undefined*/
+        if(value){
+          scope.Obj = value;
+          /*Injecting the Method*/
+          scope.Obj.invoke = function(){
+            update();
+          };
+        }
+      });
     }
   };
 }]);

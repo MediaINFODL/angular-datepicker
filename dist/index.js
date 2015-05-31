@@ -37,7 +37,8 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
     scope: {
       model: '=datePicker',
       after: '=?',
-      before: '=?'
+      before: '=?',
+      callUpdate: '='
     },
     link: function (scope, element, attrs, ngModel) {
 
@@ -256,6 +257,18 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         }
         return is;
       };
+
+      /*This method will be called whet the 'callUpdate' value is changes*/
+      scope.$watch('callUpdate', function (value) {
+        /*Checking if the given value is not undefined*/
+        if(value){
+          scope.Obj = value;
+          /*Injecting the Method*/
+          scope.Obj.invoke = function(){
+            update();
+          };
+        }
+      });
     }
   };
 }]);
@@ -608,7 +621,7 @@ angular.module("datePicker").run(["$templateCache", function($templateCache) {
     "      <tr>\n" +
     "        <th ng-click=\"prev()\">&lsaquo;</th>\n" +
     "        <th ng-click=\"prev(12)\">&lsaquo;&lsaquo;</th>\n" +
-    "        <th colspan=\"5\" class=\"switch\" ng-click=\"setView('month')\">{{date|date:\"yyyy MMMM\"}}</th>\n" +
+    "        <th colspan=\"3\" class=\"switch\" ng-click=\"setView('month')\">{{date|date:\"yyyy MMMM\"}}</th>\n" +
     "        <th ng-click=\"next(12)\">&rsaquo;&rsaquo;</i></th>\n" +
     "        <th ng-click=\"next()\">&rsaquo;</i></th>\n" +
     "      </tr>\n" +
@@ -633,7 +646,7 @@ angular.module("datePicker").run(["$templateCache", function($templateCache) {
     "      <tr>\n" +
     "        <th ng-click=\"prev(10)\">&lsaquo;</th>\n" +
     "        <th ng-click=\"prev(50)\">&lsaquo;&lsaquo;</th>\n" +
-    "        <th colspan=\"5\" class=\"switch\">{{years[0].getFullYear()}}-{{years[years.length-1].getFullYear()}}</th>\n" +
+    "        <th colspan=\"3\" class=\"switch\">{{years[0].getFullYear()}}-{{years[years.length-1].getFullYear()}}</th>\n" +
     "        <th ng-click=\"next(50)\">&rsaquo;&rsaquo;</i></th>\n" +
     "        <th ng-click=\"next(10)\">&rsaquo;</i></th>\n" +
     "      </tr>\n" +
@@ -655,7 +668,7 @@ angular.module("datePicker").run(["$templateCache", function($templateCache) {
     "      <tr>\n" +
     "        <th ng-click=\"prev()\">&lsaquo;</th>\n" +
     "        <th ng-click=\"prev(10)\">&lsaquo;&lsaquo;</th>\n" +
-    "        <th colspan=\"5\" class=\"switch\" ng-click=\"setView('year')\">{{ date|date:\"yyyy\" }}</th>\n" +
+    "        <th colspan=\"3\" class=\"switch\" ng-click=\"setView('year')\">{{ date|date:\"yyyy\" }}</th>\n" +
     "        <th ng-click=\"next(10)\">&rsaquo;&rsaquo;</i></th>\n" +
     "        <th ng-click=\"next()\">&rsaquo;</i></th>\n" +
     "      </tr>\n" +
@@ -677,9 +690,7 @@ angular.module("datePicker").run(["$templateCache", function($templateCache) {
     "      <thead>\n" +
     "      <tr>\n" +
     "        <th ng-click=\"prev(24)\">&lsaquo;</th>\n" +
-    "        <th ng-click=\"prev(24)\">&lsaquo;&lsaquo;</th>\n" +
     "        <th colspan=\"5\" class=\"switch\" ng-click=\"setView('date')\">{{ date|date:\"dd MMMM yyyy\" }}</th>\n" +
-    "        <th ng-click=\"next(24)\">&rsaquo;&rsaquo;</i></th>\n" +
     "        <th ng-click=\"next(24)\">&rsaquo;</i></th>\n" +
     "      </tr>\n" +
     "      </thead>\n" +
@@ -699,10 +710,8 @@ angular.module("datePicker").run(["$templateCache", function($templateCache) {
     "      <thead>\n" +
     "      <tr>\n" +
     "        <th ng-click=\"prev()\">&lsaquo;</th>\n" +
-    "        <th ng-click=\"prev()\">&lsaquo;&lsaquo;</th>\n" +
     "        <th colspan=\"5\" class=\"switch\" ng-click=\"setView('hours')\">{{ date|date:\"dd MMMM yyyy\" }}\n" +
     "        </th>\n" +
-    "        <th ng-click=\"next()\">&rsaquo;&rsaquo;</i></th>\n" +
     "        <th ng-click=\"next()\">&rsaquo;</i></th>\n" +
     "      </tr>\n" +
     "      </thead>\n" +
