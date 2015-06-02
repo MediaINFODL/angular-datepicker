@@ -63,7 +63,7 @@
           <span ng-repeat="month in months"
                 ng-class="{'active':isSameMonth(month),'after':isAfter(month),'before':isBefore(month),'now':isNow(month)}"
                 ng-click="setDate(month)"
-                ng-bind="month|date:'MMM'"></span>
+                ng-bind="translate(month,'MMM')"></span>
         </td>
       </tr>
       </tbody>
