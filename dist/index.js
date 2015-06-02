@@ -685,7 +685,7 @@ angular.module("datePicker").run(["$templateCache", function($templateCache) {
     "          <span ng-repeat=\"month in months\"\n" +
     "                ng-class=\"{'active':isSameMonth(month),'after':isAfter(month),'before':isBefore(month),'now':isNow(month)}\"\n" +
     "                ng-click=\"setDate(month)\"\n" +
-    "                ng-bind=\"month|date:'MMM'\"></span>\n" +
+    "                ng-bind=\"translate(month,'MMM')\"></span>\n" +
     "        </td>\n" +
     "      </tr>\n" +
     "      </tbody>\n" +
