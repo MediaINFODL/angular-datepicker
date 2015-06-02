@@ -27,7 +27,7 @@ Module.filter('time',function () {
   };
 });
 
-Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function datePickerDirective(datePickerConfig, datePickerUtils) {
+Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', '$filter', function datePickerDirective(datePickerConfig, datePickerUtils, $filter) {
 
   //noinspection JSUnusedLocalSymbols
   return {
@@ -259,7 +259,8 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         return is;
       };
 
-      scope.translate = function(key){
+      scope.translate = function(date, format){
+        var key = $filter('date')(date, format);
         if(scope.translationStrings && Array.isArray(scope.translationStrings) && (key in scope.translationStrings)){
           return scope.translationStrings[key];
         }
@@ -625,12 +626,12 @@ angular.module("datePicker").run(["$templateCache", function($templateCache) {
     "      <tr>\n" +
     "        <th ng-click=\"prev()\">&lsaquo;</th>\n" +
     "        <th ng-click=\"prev(12)\">&lsaquo;&lsaquo;</th>\n" +
-    "        <th colspan=\"3\" class=\"switch\" ng-click=\"setView('month')\">{{date|date:\"yyyy\"}} {{translate(date|date:\"MMM\")}}</th>\n" +
+    "        <th colspan=\"3\" class=\"switch\" ng-click=\"setView('month')\">{{date|date:\"yyyy\"}} {{translate(date, \"MMM\")}}</th>\n" +
     "        <th ng-click=\"next(12)\">&rsaquo;&rsaquo;</i></th>\n" +
     "        <th ng-click=\"next()\">&rsaquo;</i></th>\n" +
     "      </tr>\n" +
     "      <tr>\n" +
-    "        <th ng-repeat=\"day in weekdays\" style=\"overflow: hidden\">{{translate(day|date:\"EEE\")}}</th>\n" +
+    "        <th ng-repeat=\"day in weekdays\" style=\"overflow: hidden\">{{translate(day,\"EEE\")}}</th>\n" +
     "      </tr>\n" +
     "      </thead>\n" +
     "      <tbody>\n" +
@@ -694,7 +695,7 @@ angular.module("datePicker").run(["$templateCache", function($templateCache) {
     "      <thead>\n" +
     "      <tr>\n" +
     "        <th ng-click=\"prev(24)\">&lsaquo;</th>\n" +
-    "        <th colspan=\"5\" class=\"switch\" ng-click=\"setView('date')\">{{ date|date:\"dd\" }} {{ translate(date|date:\"MMMM\") }} {{ date|date:\"yyyy\" }}</th>\n" +
+    "        <th colspan=\"5\" class=\"switch\" ng-click=\"setView('date')\">{{ date|date:\"dd\" }} {{ translate(date,\"MMM\") }} {{ date|date:\"yyyy\" }}</th>\n" +
     "        <th ng-click=\"next(24)\">&rsaquo;</i></th>\n" +
     "      </tr>\n" +
     "      </thead>\n" +
@@ -714,7 +715,7 @@ angular.module("datePicker").run(["$templateCache", function($templateCache) {
     "      <thead>\n" +
     "      <tr>\n" +
     "        <th ng-click=\"prev()\">&lsaquo;</th>\n" +
-    "        <th colspan=\"5\" class=\"switch\" ng-click=\"setView('hours')\">{{ date|date:\"dd\" }} {{ translate(date|date:\"MMMM\") }} {{ date|date:\"yyyy\" }}\n" +
+    "        <th colspan=\"5\" class=\"switch\" ng-click=\"setView('hours')\">{{ date|date:\"dd\" }} {{ translate(date,\"MMM\") }} {{ date|date:\"yyyy\" }}\n" +
     "        </th>\n" +
     "        <th ng-click=\"next()\">&rsaquo;</i></th>\n" +
     "      </tr>\n" +

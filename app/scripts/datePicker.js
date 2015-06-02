@@ -25,7 +25,7 @@ Module.filter('time',function () {
   };
 });
 
-Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function datePickerDirective(datePickerConfig, datePickerUtils) {
+Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', '$filter', function datePickerDirective(datePickerConfig, datePickerUtils, $filter) {
 
   //noinspection JSUnusedLocalSymbols
   return {
@@ -257,7 +257,8 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
         return is;
       };
 
-      scope.translate = function(key){
+      scope.translate = function(date, format){
+        var key = $filter('date')(date, format);
         if(scope.translationStrings && Array.isArray(scope.translationStrings) && (key in scope.translationStrings)){
           return scope.translationStrings[key];
         }
