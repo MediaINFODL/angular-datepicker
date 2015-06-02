@@ -36,7 +36,8 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
       model: '=datePicker',
       after: '=?',
       before: '=?',
-      callUpdate: '='
+      callUpdate: '=',
+      translationStrings: '='
     },
     link: function (scope, element, attrs, ngModel) {
 
@@ -254,6 +255,13 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', function 
           is &= date.getFullYear() === now.getFullYear();
         }
         return is;
+      };
+
+      scope.translate = function(key){
+        if(scope.translationStrings && Array.isArray(scope.translationStrings) && (key in scope.translationStrings)){
+          return scope.translationStrings[key];
+        }
+        return key;
       };
 
       /*This method will be called whet the 'callUpdate' value is changes*/
