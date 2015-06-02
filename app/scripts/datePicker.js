@@ -259,7 +259,8 @@ Module.directive('datePicker', ['datePickerConfig', 'datePickerUtils', '$filter'
 
       scope.translate = function(date, format){
         var key = $filter('date')(date, format);
-        if(scope.translationStrings && Array.isArray(scope.translationStrings) && (key in scope.translationStrings)){
+        // console.log("datePicker > translate:", date, format, key);
+        if(scope.translationStrings && (key in scope.translationStrings)){
           return scope.translationStrings[key];
         }
         return key;
